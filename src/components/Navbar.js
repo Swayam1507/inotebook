@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate()
-  const { notes, getnotes } = useContext(noteContext)
+  const { notes, getnotes, getuser, user } = useContext(noteContext)
   useEffect(() => {
     console.log("useeffect")
     if(localStorage.getItem("token")==undefined){
@@ -17,6 +17,7 @@ const Navbar = () => {
     }
     if(localStorage.getItem("token")){
       getnotes();
+      getuser();
     }
   }, [])
 
@@ -26,7 +27,7 @@ const Navbar = () => {
     <div>
       <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="#">iNoteBook</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -35,10 +36,11 @@ const Navbar = () => {
               <li class="nav-item">
                 <Link class="nav-link active" aria-current="page" to="/">Home</Link>
               </li>
-              <li class="nav-item">
+              {/* <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
-              </li>
+              </li> */}
             </ul>
+            <div className='mx-3'>{user}</div>
             {localStorage.getItem("token") &&  <a className='btn btn-primary' onClick={()=>{console.log("clicked"); localStorage.removeItem("token"); navigate("/login")}}>Logout</a>}
             {!localStorage.getItem("token") &&  <div><Link to="/login" class="btn btn-primary mx-3" onClick={() => {
               // navigate("/login")
